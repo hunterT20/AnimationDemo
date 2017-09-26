@@ -1,10 +1,12 @@
-package vn.aqtsoft.animationdemo;
+package vn.aqtsoft.animationdemo.animation;
+
 
 public enum Techniques {
-    FlipInX(FlipInXAnimator.class);
+    FlipInX(FlipInXAnimator.class),
+    FlipOutX(FlipOutXAnimator.class);
     private Class animatorClazz;
 
-    private Techniques(Class clazz) {
+    Techniques(Class clazz) {
         animatorClazz = clazz;
     }
 

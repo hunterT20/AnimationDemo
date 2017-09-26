@@ -1,19 +1,19 @@
 package vn.aqtsoft.animationdemo;
 
 import android.animation.Animator;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import static vn.aqtsoft.animationdemo.Techniques.FlipInX;
+import vn.aqtsoft.animationdemo.animation.Techniques;
+import vn.aqtsoft.animationdemo.animation.YoYo;
+
+import static vn.aqtsoft.animationdemo.animation.Techniques.FlipInX;
+import static vn.aqtsoft.animationdemo.animation.Techniques.FlipOutX;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -47,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
         layout5 = findViewById(R.id.l5);
         layouttotal1 = findViewById(R.id.lt1);
 
-        layout2.setVisibility(View.GONE);
-        layout3.setVisibility(View.GONE);
+        layouttotal1.setVisibility(View.GONE);
         layout4.setVisibility(View.GONE);
         layout5.setVisibility(View.GONE);
         t1 = findViewById(R.id.t1);
@@ -60,14 +59,20 @@ public class MainActivity extends AppCompatActivity {
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playAnimationDemo();
+                playAnimationDemoIN();
+            }
+        });
+
+        layout5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playAnimationDemoOUT();
             }
         });
     }
 
-    public void playAnimationDemo(){
-        layout2.setVisibility(View.GONE);
-        layout3.setVisibility(View.GONE);
+    public void playAnimationDemoIN(){
+        layouttotal1.setVisibility(View.VISIBLE);
         layout4.setVisibility(View.GONE);
         layout5.setVisibility(View.GONE);
 
@@ -77,22 +82,21 @@ public class MainActivity extends AppCompatActivity {
         t5.setTextColor(getResources().getColor(R.color.cardview_light_background));
 
 
-        Techniques technique = (Techniques) FlipInX;
+        Techniques technique = FlipInX;
         rope = YoYo.with(technique)
-                .duration(300)
+                .duration(350)
                 .pivot(YoYo.CENTER_PIVOT, 0)
                 .interpolate(new AccelerateDecelerateInterpolator())
                 .withListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animator) {
                         t1.setText("thay thế 1");
-                        layout2.setVisibility(View.VISIBLE);
-                        layout3.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onAnimationEnd(Animator animator) {
                         t2.setTextColor(getResources().getColor(R.color.cardview_dark_background));
+                        layout4.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -109,45 +113,22 @@ public class MainActivity extends AppCompatActivity {
         rope = YoYo.with(technique)
                 .duration(300)
                 .pivot(YoYo.CENTER_PIVOT, 0)
-                .delay(300)
+                .delay(350)
                 .interpolate(new AccelerateDecelerateInterpolator())
                 .withListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animator) {
-
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                t3.setTextColor(getResources().getColor(R.color.cardview_dark_background));
+                            }
+                        }, 550);
                     }
 
                     @Override
                     public void onAnimationEnd(Animator animator) {
-                        t3.setTextColor(getResources().getColor(R.color.cardview_dark_background));
-                        layout4.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-
-                    }
-                }).playOn(layout3);
-
-        rope = YoYo.with(technique)
-                .duration(300)
-                .pivot(YoYo.CENTER_PIVOT, 0)
-                .delay(600)
-                .interpolate(new AccelerateDecelerateInterpolator())
-                .withListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        t3.setTextColor(getResources().getColor(R.color.cardview_dark_background));
                         t4.setTextColor(getResources().getColor(R.color.cardview_dark_background));
                         layout5.setVisibility(View.VISIBLE);
                     }
@@ -166,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         rope = YoYo.with(technique)
                 .duration(300)
                 .pivot(YoYo.CENTER_PIVOT, 0)
-                .delay(900)
+                .delay(650)
                 .interpolate(new AccelerateDecelerateInterpolator())
                 .withListener(new Animator.AnimatorListener() {
                     @Override
@@ -177,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 t5.setTextColor(getResources().getColor(R.color.cardview_dark_background));
                             }
-                        }, 1100);
+                        }, 850);
                     }
 
                     @Override
@@ -194,6 +175,90 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }).playOn(layout5);
+    }
 
+    public void playAnimationDemoOUT(){
+        Techniques technique = FlipOutX;
+        rope = YoYo.with(technique)
+                .duration(350)
+                .pivot(YoYo.CENTER_PIVOT, 0)
+                .interpolate(new AccelerateDecelerateInterpolator())
+                .withListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                        t5.setTextColor(getResources().getColor(R.color.cardview_light_background));
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        layout5.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                }).playOn(layout5);
+
+        rope = YoYo.with(technique)
+                .duration(350)
+                .delay(350)
+                .pivot(YoYo.CENTER_PIVOT, 0)
+                .interpolate(new AccelerateDecelerateInterpolator())
+                .withListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                        t4.setTextColor(getResources().getColor(R.color.cardview_light_background));
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        layout4.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                }).playOn(layout4);
+
+        rope = YoYo.with(technique)
+                .duration(400)
+                .delay(700)
+                .pivot(YoYo.CENTER_PIVOT, 0)
+                .interpolate(new AccelerateDecelerateInterpolator())
+                .withListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                        t3.setTextColor(getResources().getColor(R.color.cardview_light_background));
+                        t2.setTextColor(getResources().getColor(R.color.cardview_light_background));
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        layouttotal1.setVisibility(View.GONE);
+                        t1.setText("Out");
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                }).playOn(layouttotal1);
     }
 }

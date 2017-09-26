@@ -1,4 +1,4 @@
-package vn.aqtsoft.animationdemo;
+package vn.aqtsoft.animationdemo.animation;
 
 /*
  * The MIT License (MIT)

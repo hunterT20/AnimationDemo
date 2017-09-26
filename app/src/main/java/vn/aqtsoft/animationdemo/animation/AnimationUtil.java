@@ -1,8 +1,10 @@
-package vn.aqtsoft.animationdemo;
+package vn.aqtsoft.animationdemo.animation;
 
 import android.content.Context;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+
+import vn.aqtsoft.animationdemo.R;
 
 /**
  * Class hiệu ứng trong app

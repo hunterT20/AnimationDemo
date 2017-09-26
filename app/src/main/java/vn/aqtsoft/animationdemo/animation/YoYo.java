@@ -1,4 +1,4 @@
-package vn.aqtsoft.animationdemo;
+package vn.aqtsoft.animationdemo.animation;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package vn.aqtsoft.animationdemo;
+package vn.aqtsoft.animationdemo.animation;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.graphics.Camera;
